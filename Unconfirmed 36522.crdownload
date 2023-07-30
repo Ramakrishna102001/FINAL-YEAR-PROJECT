@@ -1,0 +1,365 @@
+
+
+import joblib
+import numpy as np;
+import pandas as pd;
+import pymysql
+pymysql.install_as_MySQLdb()
+import MySQLdb
+import matplotlib.pyplot  as plt;
+from sklearn.model_selection  import train_test_split
+from sklearn.linear_model  import LogisticRegression
+from sklearn.metrics import accuracy_score,confusion_matrix
+import pickle
+gmail_list=[]
+password_list=[]
+gmail_list1=[]
+password_list1=[]
+import numpy as np;
+import pandas as pd;
+import matplotlib.pyplot  as plt;
+from sklearn.model_selection  import train_test_split
+from sklearn.linear_model  import LogisticRegression
+from sklearn.metrics import accuracy_score,confusion_matrix
+import pickle
+
+
+
+
+import numpy as np
+from flask import Flask, request, jsonify, render_template
+import pickle
+import numpy as np;
+import pandas as pd;
+import matplotlib.pyplot  as plt;
+from sklearn.model_selection  import train_test_split
+from sklearn.linear_model  import LogisticRegression
+from sklearn.metrics import accuracy_score,confusion_matrix
+import pickle
+
+
+from yield_code import yield_fn
+
+
+import numpy as np
+from flask import Flask, request, jsonify, render_template
+import pickle
+
+features_list=['crop_year', 'area', 'temperature', 'wind_speed', 'precipitation',
+       'humidity', 'N', 'P', 'K', 'pressure', 'BAGALKOT', 'BANGALORE RURAL',
+       'BELGAUM', 'BELLARY', 'BENGALURU URBAN', 'BIDAR', 'BIJAPUR',
+       'CHAMARAJANAGAR', 'CHIKBALLAPUR', 'CHIKMAGALUR', 'CHITRADURGA',
+       'DAKSHIN KANNAD', 'DAVANGERE', 'DHARWAD', 'GADAG', 'GULBARGA', 'HASSAN',
+       'HAVERI', 'KODAGU', 'KOLAR', 'KOPPAL', 'MANDYA', 'MYSORE', 'RAICHUR',
+       'RAMANAGARA', 'SHIMOGA', 'TUMKUR', 'UDUPI', 'UTTAR KANNAD', 'YADGIR',
+       'Kharif     ', 'Rabi       ', 'Summer     ', 'Whole Year ', 'Arecanut',
+       'Arhar/Tur', 'Bajra', 'Banana', 'Black pepper', 'Cardamom', 'Cashewnut',
+       'Castor seed', 'Coconut ', 'Coriander', 'Cotton(lint)', 'Cowpea(Lobia)',
+       'Dry chillies', 'Dry ginger', 'Garlic', 'Gram', 'Groundnut',
+       'Horse-gram', 'Jowar', 'Linseed', 'Maize', 'Mesta', 'Moong(Green Gram)',
+       'Niger seed', 'Onion', 'Other  Rabi pulses', 'Other Kharif pulses',
+       'Peas & beans (Pulses)', 'Potato', 'Ragi', 'Rapeseed &Mustard', 'Rice',
+       'Safflower', 'Sannhamp', 'Sesamum', 'Small millets', 'Soyabean',
+       'Sugarcane', 'Sunflower', 'Sweet potato', 'Tapioca', 'Tobacco',
+       'Turmeric', 'Urad', 'Wheat', 'Karnataka', 'chalky', 'clay', 'loamy',
+       'peaty', 'sandy', 'silt', 'silty']
+
+
+features_list1=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+
+
+from recamandation_code import recondation_fn
+
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def home():
+    return render_template('login.html') 
+
+@app.route('/logedin',methods=['POST'])
+def logedin():
+    
+    int_features3 = [str(x) for x in request.form.values()]
+    print(int_features3)
+    logu=int_features3[0]
+    passw=int_features3[1]
+   # if int_features2[0]==12345 and int_features2[1]==12345:
+
+    import MySQLdb
+
+
+# Open database connection
+    db = MySQLdb.connect("localhost","root","","ddbb" )
+
+# prepare a cursor object using cursor() method
+    cursor = db.cursor()
+    cursor.execute("SELECT user FROM user_register")
+    result1=cursor.fetchall()
+              #print(result1)
+              #print(gmail1)
+    for row1 in result1:
+                      print(row1)
+                      print(row1[0])
+                      gmail_list.append(str(row1[0]))
+                      
+                      #gmail_list.append(row1[0])
+                      #value1=row1
+                      
+    print(gmail_list)
+    
+
+    cursor1= db.cursor()
+    cursor1.execute("SELECT password FROM user_register")
+    result2=cursor1.fetchall()
+              #print(result1)
+              #print(gmail1)
+    for row2 in result2:
+                      print(row2)
+                      print(row2[0])
+                      password_list.append(str(row2[0]))
+                      
+                      #gmail_list.append(row1[0])
+                      #value1=row1
+                      
+    print(password_list)
+    print(gmail_list.index(logu))
+    print(password_list.index(passw))
+    
+    if gmail_list.index(logu)==password_list.index(passw):
+        return render_template('index.html')
+    else:
+        return jsonify({'result':'use proper  gmail and password'})
+                  
+                                               
+
+
+
+                          
+                     # print(value1[0:])
+    
+    
+    
+    
+
+              
+              # int_features3[0]==12345 and int_features3[1]==12345:
+               #                      return render_template('index.html')
+        
+@app.route('/register',methods=['POST'])
+def register():
+    
+
+    int_features2 = [str(x) for x in request.form.values()]
+    #print(int_features2)
+    #print(int_features2[0])
+    #print(int_features2[1])
+    r1=int_features2[0]
+    print(r1)
+    
+    r2=int_features2[1]
+    print(r2)
+    logu1=int_features2[0]
+    passw1=int_features2[1]
+        
+    
+
+    
+
+   # if int_features2[0]==12345 and int_features2[1]==12345:
+
+    import MySQLdb
+
+
+# Open database connection
+    db = MySQLdb.connect("localhost","root",'',"ddbb" )
+
+# prepare a cursor object using cursor() method
+    cursor = db.cursor()
+    cursor.execute("SELECT user FROM user_register")
+    result1=cursor.fetchall()
+              #print(result1)
+              #print(gmail1)
+    for row1 in result1:
+                      print(row1)
+                      print(row1[0])
+                      gmail_list1.append(str(row1[0]))
+                      
+                      #gmail_list.append(row1[0])
+                      #value1=row1
+                      
+    print(gmail_list1)
+    if logu1 in gmail_list1:
+                      return jsonify({'result':'this gmail is already in use '})  
+    else:
+
+                  #return jsonify({'result':'this  gmail is not registered'})
+              
+
+# Prepare SQL query to INSERT a record into the database.
+                  sql = "INSERT INTO user_register(user,password) VALUES (%s,%s)"
+                  val = (r1, r2)
+   
+                  try:
+   # Execute the SQL command
+                                       cursor.execute(sql,val)
+   # Commit your changes in the database
+                                       db.commit()
+                  except:
+   # Rollback in case there is any error
+                                       db.rollback()
+
+# disconnect from server
+                  db.close()
+                 # return jsonify({'result':'succesfully registered'})
+                  return render_template('login.html')
+
+                      
+
+
+
+@app.route('/production')
+def production(): 
+    return render_template('index.html')
+
+
+@app.route('/production/predict',methods=['POST'])
+def predict():
+    '''
+    For rendering results on HTML GUI
+    '''
+
+    print(features_list1,features_list)
+
+    int_features = [str(x) for x in request.form.values()]
+
+
+
+    print("output from web page  ",int_features)
+
+    #features_list1[83]=int_features[0]
+
+
+
+    state_ind=features_list.index(int_features[0])
+
+    print(state_ind)
+
+    features_list1[state_ind]=1
+
+
+
+    print(int_features[1])
+
+
+    
+
+
+    #print(features_list.index('DHULE'))
+
+
+    dist_ind=features_list.index(int_features[1])
+
+    print(dist_ind)
+
+    features_list1[dist_ind]=1
+
+    season_ind=features_list.index(int_features[3])
+
+    features_list1[season_ind]=1
+
+    crop_ind=features_list.index(int_features[4])
+
+    features_list1[crop_ind]=1
+
+    features_list1[0]=float(int_features[2])
+
+
+    features_list1[1]=float(int_features[5])
+
+    features_list1[2]=float(int_features[6])
+
+
+    features_list1[3]=float(int_features[7])
+
+
+    features_list1[4]=float(int_features[8])
+
+    features_list1[5]=float(int_features[9])
+
+
+    soil_ind=features_list.index(int_features[10])
+
+    features_list1[soil_ind]=1
+
+    features_list1[6]=float(int_features[11])
+
+    features_list1[7]=float(int_features[12])
+
+    features_list1[8]=float(int_features[13])
+
+
+
+
+
+    a=features_list1
+
+
+    print(a)
+
+    output_yield=yield_fn(features_list1)
+
+
+    return render_template('index.html', prediction_text='Yield  will be    {} kg for Hectare '.format(output_yield[0]*1000))
+
+@app.route('/crop')
+def crop():
+     return render_template('crop.html')
+
+
+
+@app.route('/crop/predict1',methods=['POST'])
+def predict1():
+    '''
+    For rendering results on HTML GUI
+    '''
+    int_features1 = [str(x) for x in request.form.values()]
+    int_features2=['1','2','3','4','5','6']
+    a1=int_features1[0]
+    a2=int_features1[1]
+    a3=int_features1[2]
+    a4=int_features1[3]
+
+    
+    a5=int_features1[4]
+    a6=int_features1[5]
+    a7=int_features1[6]
+    
+    
+    
+   # int_features21 = np.array(int_features2)
+
+
+
+
+  #  int_features11 = int_features21.reshape(1, -1)
+   # prediction1 = model1.predict(int_features11)
+
+    output1 = recondation_fn(a1,a2,a3,a4,a5,a6,a7)
+   # resultcrop = {value:key for key, value in croplist.items()}
+    print(output1)
+    
+    
+ 
+    
+
+    
+
+    return render_template('crop.html', prediction1_text='You will get best Yield if you cultivate  {} '.format(output1[0]))
+
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
